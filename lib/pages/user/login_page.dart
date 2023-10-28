@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/pages/post/home_page.dart';
+import 'package:flutter_blog/utils/validator_util.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
+import 'package:validators/validators.dart';
 
 import '../../components/custom_elevated_button.dart';
 import '../../components/custom_text_from_field.dart';
@@ -42,20 +44,17 @@ class LoginPage extends StatelessWidget {
           children: [
             CustomTextFormField(
                 hint: "Enter Username",
-                validator: (value) {
-                  printInfo(info: '$value');
-                }),
+                validator: validateUsername()),
             CustomTextFormField(
                 hint: "Enter Password",
                 hidden: true,
-                validator: (value) {
-
-                }),
+                validator: validatePassword()),
             CustomElevatedButton(
               field: "로그인",
               pageRoute: () {
-                _formKey.currentState!.validate();
-                Get.to(HomePage());
+                if (_formKey.currentState!.validate()) {
+                  Get.to(HomePage());
+                }
               },
             )
           ],
